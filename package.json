@@ -1,9 +1,9 @@
 {
-  "name": "edd-calculator",
+  "name": "todo-list",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://dignifiedmt.github.io/edd-calculator",
+  "homepage": "https://dignifiedmt.github.io/todo-list",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
