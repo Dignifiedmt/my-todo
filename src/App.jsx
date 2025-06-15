@@ -1,51 +1,50 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import './index.css';
+import React, {useState} from "react";
+import Header from "./Header";
+import TaskCard from "./TaskCard";
+import TaskInput from "./TaskInput";
+import "./index.css";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+    const [tasks, setTasks] = useState([]);
+    const [newTask, setNewTask] = useState("");
+    const [newTime, setNewTime] = useState("");
 
-  const handleAddTask = () => {
-    if (newTask.trim() !== '') {
-      setTasks([...tasks, newTask]);
-      setNewTask('');
-    }
-  };
+    const handleAddTask = () => {
+        if (newTask.trim() !== "" && newTime !== "") {
+            setTasks([
+                ...tasks,
+                {
+                    id: tasks.length + 1,
+                    name: newTask,
+                    time: newTime,
+                },
+            ]);
+            setNewTask("");
+            setNewTime("");
+        }
+    };
 
-  const handleRemoveTask = (index) => {
-    setTasks(tasks.filter((task, i) => i !== index));
-  };
+    const handleRemoveTask = (id) => {
+        setTasks(tasks.filter((task) => task.id !== id));
+    };
 
-  return (
-    <div className="container">
-      <Header />
-      <input
-        type="text"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        placeholder="Add new task"
-        className="input-field"
-        required
-      /> &nbsp; &nbsp;
-      <button className="add-btn" onClick={handleAddTask}>
-        Add Task
-      </button>
-      <ul className="task-list">
-        {tasks.map((task, index) => (
-          <li key={index} className="task-item">
-            <span style={{ marginRight: 10 }}>{task}</span>
-            <button
-              className="remove-btn"
-              onClick={() => handleRemoveTask(index)}
-            >
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div className="container">
+            <Header />
+            <TaskInput
+                newTask={newTask}
+                setNewTask={setNewTask}
+                newTime={newTime}
+                setNewTime={setNewTime}
+                handleAddTask={handleAddTask}
+            />
+            <ul className="task-list">
+                {tasks.map((task) => (
+                    <TaskCard key={task.id} task={task} onRemove={handleRemoveTask} />
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export default App;
